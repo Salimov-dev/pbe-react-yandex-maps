@@ -4,7 +4,7 @@ import config from "./config/config.json";
 
 function App() {
   return (
-    <YMaps query={{ apikey: config.YANDEX_API_KEY }}>
+    <YMaps query={{ apikey: config.YANDEX_API_KEY, load: "package.full" }}>
       <GeocodeMap />
     </YMaps>
   );
