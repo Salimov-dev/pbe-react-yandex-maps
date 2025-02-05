@@ -83,6 +83,14 @@ const NoPanoramaWrapper = styled(Flex)`
   text-align: center;
 `;
 
+const MapObjectsDisplay = styled(Map)`
+  border-radius: 10px;
+  border: 1px solid grey;
+  overflow: hidden;
+  width: 100%;
+  height: 400px;
+`;
+
 const CENTER = [59.94077030138753, 30.31197058944388];
 const ZOOM = 12;
 
@@ -257,6 +265,26 @@ const GeocodeMap = () => {
         </MapWithGeocode>
       </CardWithMapWrapper>
       <Table columns={columns} dataSource={objectArray} />
+      <MapObjectsDisplay
+        defaultState={{
+          center: CENTER,
+          zoom: ZOOM
+        }}
+        onClick={(e: IMapClickEvent) => handleClickMap(e)}
+      >
+        {objectArray.map(
+          (obj) =>
+            obj.coordinates && (
+              <Placemark
+                key={obj.id}
+                geometry={obj.coordinates}
+                properties={{
+                  balloonContent: `<strong>${obj?.address?.location}</strong><br/>${obj?.address?.route}`
+                }}
+              />
+            )
+        )}
+      </MapObjectsDisplay>
     </CardWithGeocodeMap>
   );
 };
